@@ -87,7 +87,7 @@ export default function OGAdminLanding() {
             Así luce tu negocio con OG-Admin
           </h2>
           <img
-            src="/dasboard3.png"
+            src="/ogdashboard.png"
             alt="Dashboard OG-Admin"
             className="rounded-3xl shadow-2xl mx-auto border"
           />
