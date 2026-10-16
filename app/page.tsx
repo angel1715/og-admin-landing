@@ -141,43 +141,27 @@ const screens: { src: string; title: string; text: string }[] = [
 // { quote: "…", author: "Nombre, Negocio" }
 const testimonial: { quote: string; author: string } | null = null;
 
-const plans = [
-  {
-    name: "Básico",
-    monthly: 1500,
-    lifetime: 45000,
-    users: "Hasta 2 usuarios",
-    extras: ["Todos los módulos", "Configuración inicial incluida"],
-    featured: false,
-  },
-  {
-    name: "Profesional",
-    monthly: 2500,
-    lifetime: 75000,
-    users: "Hasta 5 usuarios",
-    extras: [
-      "Todos los módulos",
-      "Configuración inicial incluida",
-      "Capacitación de tu equipo",
-    ],
-    featured: true,
-  },
-  {
-    name: "Empresarial",
-    monthly: 5000,
-    lifetime: 100000,
-    users: "Usuarios ilimitados",
-    extras: [
-      "Todos los módulos",
-      "Configuración y capacitación",
-      "Soporte prioritario",
-    ],
-    featured: false,
-  },
-];
+// Precios en RD$. El pago único equivale a 40 meses del plan mensual y a 4 años del plan
+// anual: si cambias uno, ajusta los otros para que sigan cuadrando.
+const PRICING = {
+  monthly: 2000,
+  annual: 20000, // 2 meses gratis
+  lifetime: 80000,
+  lifetimeSeats: 10 as number | null, // cupos de lanzamiento; null para no mostrarlos
+};
 
-// Pon en false para ocultar el pago único de la página
-const showLifetime = true;
+const money = (value: number) => `RD$${value.toLocaleString("es-DO")}`;
+const freeMonths = Math.round(12 - PRICING.annual / PRICING.monthly);
+const annualPerMonth = Math.round(PRICING.annual / 12);
+const lifetimeYears = Math.round(PRICING.lifetime / PRICING.annual);
+
+const included = [
+  "Todos los módulos del sistema",
+  "Empleados y técnicos de tu equipo",
+  "Facturación NCF y e-CF",
+  "Configuración inicial incluida",
+  "Actualizaciones y soporte por WhatsApp",
+];
 
 const faqs = [
   {
@@ -195,6 +179,10 @@ const faqs = [
   {
     q: "¿Cómo pago la suscripción?",
     a: "Por transferencia a una cuenta bancaria local. Subes tu comprobante desde el sistema y tu cuenta se activa cuando lo validamos.",
+  },
+    {
+    q: "¿Qué incluye el pago único?",
+    a: "Una licencia para un negocio (un RNC), con las actualizaciones del sistema y soporte durante el primer año. No incluye servicios de terceros, como el certificado digital de la DGII.",
   },
   {
     q: "¿Puedo probarlo antes de pagar?",
@@ -436,69 +424,92 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Precios */}
+           {/* Precios */}
       <section id="precios" className="scroll-mt-24 bg-white py-20">
-        <div className="mx-auto max-w-6xl px-6 text-center">
+        <div className="mx-auto max-w-5xl px-6 text-center">
           <h2 className="mb-4 text-3xl font-bold md:text-4xl">
-            Elige el plan ideal para tu negocio
+            Un solo plan, todo incluido
           </h2>
           <p className="mb-12 text-gray-600">
             14 días de prueba gratis. Sin tarjeta y sin compromiso.
           </p>
-          <div className="mx-auto grid max-w-5xl gap-8 md:grid-cols-3">
-            {plans.map((plan) => (
-              <div
-                key={plan.name}
-                className={`rounded-3xl border-2 bg-white p-8 text-left ${
-                  plan.featured
-                    ? "border-blue-600 shadow-xl md:scale-105"
-                    : "border-gray-200"
-                }`}
-              >
-                {plan.featured && (
-                  <span className="mb-3 inline-block rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
-                    Más elegido
-                  </span>
-                )}
-                <h3 className="mb-1 text-2xl font-bold">{plan.name}</h3>
-                <p className="mb-5 text-sm text-gray-500">{plan.users}</p>
-                <div className="mb-6">
-                  <span className="text-5xl font-bold">
-                    RD${plan.monthly.toLocaleString("es-DO")}
-                  </span>
-                  <span className="text-gray-500"> /mes</span>
-                </div>
-                <ul className="mb-8 space-y-2 text-sm text-gray-700">
-                  {plan.extras.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <Check
-                        size={16}
-                        className="mt-0.5 shrink-0 text-green-600"
-                      />
-                      {item}
-                    </li>
-                  ))}
-                  {showLifetime && (
-                    <li className="flex items-start gap-2 text-gray-500">
-                      <Check
-                        size={16}
-                        className="mt-0.5 shrink-0 text-gray-400"
-                      />
-                      Pago único disponible: RD$
-                      {plan.lifetime.toLocaleString("es-DO")} (cupos limitados)
-                    </li>
-                  )}
-                </ul>
+
+          <div className="rounded-3xl border-2 border-blue-600 bg-white p-8 text-left shadow-xl md:p-12">
+            <h3 className="mb-6 text-2xl font-bold">OG-Admin completo</h3>
+            <ul className="grid gap-3 text-gray-700 sm:grid-cols-2">
+              {included.map((item) => (
+                <li key={item} className="flex items-start gap-2">
+                  <Check size={18} className="mt-0.5 shrink-0 text-green-600" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-10 grid gap-6 md:grid-cols-3">
+              {/* Mensual */}
+              <div className="rounded-2xl border border-gray-200 p-6">
+                <p className="text-sm font-semibold text-gray-500">Mensual</p>
+                <p className="mt-2 text-4xl font-bold">{money(PRICING.monthly)}</p>
+                <p className="text-sm text-gray-500">por mes</p>
                 <a
-                  href={whatsappPrueba}
+                  href={wa("Hola, quiero el plan mensual de OG-Admin")}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="block w-full rounded-2xl bg-blue-600 py-4 text-center font-semibold text-white hover:bg-blue-700"
+                  className="mt-6 block rounded-xl bg-gray-900 py-3 text-center font-semibold text-white hover:bg-gray-800"
                 >
-                  Iniciar prueba gratis
+                  Empezar prueba gratis
                 </a>
               </div>
-            ))}
+
+              {/* Anual */}
+              <div className="relative rounded-2xl border-2 border-blue-600 p-6">
+                <span className="absolute -top-3 left-6 rounded-full bg-blue-600 px-3 py-1 text-xs font-semibold text-white">
+                  Ahorra {freeMonths} meses
+                </span>
+                <p className="text-sm font-semibold text-gray-500">Anual</p>
+                <p className="mt-2 text-4xl font-bold">{money(PRICING.annual)}</p>
+                <p className="text-sm text-gray-500">
+                  por año · {money(annualPerMonth)} al mes
+                </p>
+                <a
+                  href={wa("Hola, quiero el plan anual de OG-Admin")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 block rounded-xl bg-blue-600 py-3 text-center font-semibold text-white hover:bg-blue-700"
+                >
+                  Empezar prueba gratis
+                </a>
+              </div>
+
+              {/* Pago único */}
+              <div className="relative rounded-2xl border border-gray-200 p-6">
+                {PRICING.lifetimeSeats && (
+                  <span className="absolute -top-3 left-6 rounded-full bg-amber-400 px-3 py-1 text-xs font-semibold text-blue-950">
+                    Solo {PRICING.lifetimeSeats} cupos
+                  </span>
+                )}
+                <p className="text-sm font-semibold text-gray-500">Pago único</p>
+                <p className="mt-2 text-4xl font-bold">{money(PRICING.lifetime)}</p>
+                <p className="text-sm text-gray-500">
+                  una sola vez · equivale a {lifetimeYears} años del plan anual
+                </p>
+                <a
+                  href={wa("Hola, quiero la licencia de pago único de OG-Admin")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-6 block rounded-xl bg-gray-900 py-3 text-center font-semibold text-white hover:bg-gray-800"
+                >
+                  Consultar licencia
+                </a>
+              </div>
+            </div>
+
+            {/* Agrega aquí si el precio incluye o no ITBIS cuando lo confirmes con tu contador */}
+            <p className="mt-6 text-xs text-gray-500">
+              Precios en pesos dominicanos (RD$). El certificado digital para
+              la facturación electrónica lo emite una entidad certificadora y no
+              está incluido.
+            </p>
           </div>
         </div>
       </section>
