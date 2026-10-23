@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://og-admin-landing.vercel.app"),
   title: "OG-Admin | ERP para Negocios en República Dominicana",
   description:
     "Sistema ERP en la nube para gestionar ventas, inventario, reparaciones con IMEI, caja y clientes. Ideal para tiendas de celulares y PyMEs en RD. Prueba gratis 14 días.",

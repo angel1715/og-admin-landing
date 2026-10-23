@@ -27,6 +27,7 @@ export const metadata: Metadata = {
 const WHATSAPP = "18297470508";
 const wa = (text: string) =>
   `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
+const ERP_URL = "https://inventory-system-theta-flax.vercel.app";
 const whatsappDemo = wa("Hola, quiero agendar una demo de OG-Admin");
 const whatsappPrueba = wa(
   "Hola, quiero iniciar mi prueba gratis de 14 días de OG-Admin",
@@ -197,10 +198,9 @@ const faqs = [
 export default function Home() {
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900">
-      {/* Aviso DGII: bórralo o actualízalo después del 15 de noviembre de 2026 */}
+      {/* Aviso DGII: confirma las fechas vigentes en dgii.gov.do antes de poner una fecha exacta */}
       <div className="bg-amber-400 px-4 py-2 text-center text-sm font-medium text-blue-950">
-        La DGII dio plazo hasta el 15 de noviembre de 2026 a los pequeños
-        negocios para implementar la facturación electrónica.{" "}
+        Los plazos de la facturación electrónica de la DGII se acercan.{" "}
         <a href="#faq" className="underline">
           Prepárate con OG-Admin
         </a>
@@ -229,14 +229,22 @@ export default function Home() {
               Preguntas
             </a>
           </div>
-          <a
-            href={whatsappPrueba}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-full bg-green-500 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-600"
-          >
-            Prueba gratis
-          </a>
+          <div className="flex items-center gap-4">
+            <a
+              href={`${ERP_URL}/login`}
+              className="hidden text-sm font-medium text-gray-600 hover:text-gray-900 sm:inline"
+            >
+              Iniciar sesión
+            </a>
+            <a
+              href={whatsappPrueba}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full bg-green-700 px-5 py-2.5 text-sm font-semibold text-white hover:bg-green-800"
+            >
+              Prueba gratis
+            </a>
+          </div>
         </div>
       </nav>
 
@@ -362,7 +370,7 @@ export default function Home() {
                 key={step.title}
                 className="rounded-2xl border border-white/15 bg-white/5 p-6"
               >
-                <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-green-500 font-bold">
+                <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-green-700 font-bold">
                   {i + 1}
                 </div>
                 <h3 className="mb-2 text-lg font-semibold">{step.title}</h3>
@@ -544,7 +552,7 @@ export default function Home() {
       <section className="bg-gradient-to-br from-blue-900 to-indigo-900 py-24 text-center text-white">
         <div className="mx-auto max-w-3xl px-6">
           <h2 className="mb-6 text-4xl font-bold">
-            Ordena tu tienda antes del cierre de este mes
+            Ordena tu tienda y empieza a vender con control
           </h2>
           <p className="mb-10 text-xl text-blue-100">
             Te mostramos el sistema con tus propios productos y te dejamos
@@ -554,7 +562,7 @@ export default function Home() {
             href={whatsappDemo}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block rounded-2xl bg-green-500 px-12 py-5 text-xl font-semibold hover:bg-green-600"
+            className="inline-block rounded-2xl bg-green-700 px-12 py-5 text-xl font-semibold hover:bg-green-800"
           >
             Agendar mi demo gratis
           </a>
@@ -576,6 +584,15 @@ export default function Home() {
             Escríbenos por WhatsApp
           </a>
         </p>
+        <p className="mt-2">
+          <a href={`${ERP_URL}/terms`} className="underline hover:text-white">
+            Términos de servicio
+          </a>
+          {" · "}
+          <a href={`${ERP_URL}/privacy`} className="underline hover:text-white">
+            Política de privacidad
+          </a>
+        </p>
       </footer>
 
       {/* WhatsApp flotante */}
@@ -584,7 +601,7 @@ export default function Home() {
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Escribir por WhatsApp"
-        className="fixed bottom-6 right-6 rounded-full bg-green-500 p-4 text-white shadow-2xl transition-transform hover:scale-110"
+        className="fixed bottom-6 right-6 rounded-full bg-green-700 p-4 text-white shadow-2xl transition-transform hover:scale-110"
       >
         <MessageCircle size={28} />
       </a>
