@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     title: "OG-Admin - ERP para tu Negocio en RD",
     description:
       "Controla tus ventas, inventario y reparaciones desde un solo lugar.",
-    images: [{ url: "/dasboard3.png" }],
+    images: [{ url: "/screens/dashboard.jpg" }],
   },
 };
 
