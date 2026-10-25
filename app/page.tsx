@@ -135,7 +135,36 @@ const repairSteps = [
 // Capturas del sistema: pon los archivos en /public/screens y agrégalos aquí.
 // Mientras la lista esté vacía, la galería no se muestra.
 const screens: { src: string; title: string; text: string }[] = [
-  // { src: "/screens/reparaciones.png", title: "Órdenes de reparación", text: "Estados, fotos, técnico y garantía." },
+  {
+    src: "/screens/dashboard.jpg",
+    title: "Tu negocio de un vistazo",
+    text: "Efectivo en caja, utilidad, cuentas por cobrar y ventas del periodo.",
+  },
+  {
+    src: "/screens/pos.jpg",
+    title: "Punto de venta",
+    text: "Busca o escanea el producto, cobra y entrega el ticket.",
+  },
+  {
+    src: "/screens/ordenes.jpg",
+    title: "Órdenes de servicio",
+    text: "Todas las reparaciones con su estado, técnico y total.",
+  },
+  {
+    src: "/screens/seguimiento.jpg",
+    title: "Seguimiento para tu cliente",
+    text: "Tu cliente ve el avance de su reparación desde un enlace.",
+  },
+  {
+    src: "/screens/cxc.jpg",
+    title: "Cuentas por cobrar",
+    text: "Quién te debe, cuánto, y cobros con recibo.",
+  },
+  {
+    src: "/screens/caja.jpg",
+    title: "Cierre de caja",
+    text: "Compara lo esperado con lo contado y justifica cualquier diferencia.",
+  },
 ];
 
 // Cuando tu primera clienta lo autorice, pon aquí su cita real:
